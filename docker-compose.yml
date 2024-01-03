@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  ecommerce:
+    build: 
+      context: ./ecommerce
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8007
+    ports:
+      - "8007:8007"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: luxmart
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 3307:3307
+
+  phpMyAdmin:
+    image: phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+    ports:
+      - "9092:80"
+      
+
+
+ 

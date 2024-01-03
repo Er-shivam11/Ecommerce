@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-dg68)xha+d1f(i27#5ii)lcz()wqo5cbj@ss$hq6fj6%e6j&2s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.124', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.1.124', '127.0.0.1','localhost']
 
 
 # Application definition
@@ -79,6 +79,16 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'luxmart',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'db',
+        'PORT': '3306'
     }
 }
 

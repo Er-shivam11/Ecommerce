@@ -13,9 +13,11 @@ urlpatterns = [
     path("", views.sign_up, name="signup"),
     path("login/", views.sign_in, name="login"),
     path("detail/", views.det, name="det"),
-    path("card/", views.car, name="car"),
-    path("delete-car/<id>/", views.delete_car, name="delete"),
-    path("update-car/<id>/", views.update_car, name="update"),
+    path("product/", views.product, name="product"),
+    path("productlist/", views.pro_list, name="productlist"),
+    path("delete-car/<id>/", views.delete_product, name="delete"),
+    path("update-car/<id>/", views.update_product, name="update"),
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

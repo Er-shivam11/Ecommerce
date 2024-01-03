@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import *
+from django.shortcuts import render, redirect
+from .models import Product
+from .forms import ProductForm
 
 # Create your views here.
 # C:\Users\User\python_projects\django_projects
@@ -44,7 +47,7 @@ def compare_lists(request):
 
     return render(request, 'compare.html', {'result': result})
 
-
+@login_required(login_url="login")
 def home(request):
     return render(request, 'home.html')
 
@@ -92,53 +95,60 @@ def det(request):
     return render(request, "det.html", context)
 
 
-def car(request):
+# views.py
+from django.shortcuts import render, redirect
+from .models import Product
+from .forms import ProductForm
+
+def product(request):
     if request.method == 'POST':
-        data = request.POST
-        car_image = request.FILES.get('car_image')
-        car_name = data.get('car_name')
-        car_details = data.get('car_details')
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.created_by = request.user  # Assuming the user is authenticated
+            product.save()
+            return redirect('/product/')
 
-        Car.objects.create(
-            car_image=car_image,
-            car_name=car_name,
-            car_details=car_details,
-        )
-        return redirect('/card/')
+    else:
+        form = ProductForm()
 
-    queryset = Car.objects.all()
-    # for search cars
+    queryset = Product.objects.all()
 
+    # Search functionality using form instead of direct request.GET
     if request.GET.get('search'):
-        queryset = queryset.filter(
-            car_name__icontains=request.GET.get('search'))
-    # done search funtion
+        form = ProductForm(request.GET)  # Populate the form with GET data
+        if form.is_valid():
+            queryset = queryset.filter(
+                name__icontains=form.cleaned_data['name']
+            )
 
-    context = {'cardeta': queryset}
+    context = {'prod': queryset, 'form': form}
+    return render(request, 'addproduct.html', context)
 
-    return render(request, 'car.html', context)
+def pro_list(request):
+    return render(request,'product.html')
 
 
-def delete_car(request, id):
-    queryset = Car.objects.get(id=id)
+def delete_product(request, id):
+    queryset = Product.objects.get(id=id)
     queryset.delete()
-    return redirect('/card/')
+    return redirect('/product/')
 
 
-def update_car(request, id):
-    queryset = Car.objects.get(id=id)
+def update_product(request, id):
+    queryset = Product.objects.get(id=id)
     if request.method == 'POST':
         data = request.POST
-        car_image = request.FILES.get('car_image')
-        car_name = data.get('car_name')
-        car_details = data.get('car_details')
+        product_image = request.FILES.get('image')
+        product_name = data.get('name')
+        product_details = data.get('description')
 
-        queryset.car_image = car_image
-        queryset.car_name = car_name
-        if car_image:
-            queryset.car_details = car_details
+        queryset.image = product_image
+        queryset.name = product_name
+        if product_image:
+            queryset.description = product_details
         queryset.save()
-        return redirect('/card/')
+        return redirect('/product/')
 
-    context = {'cars': queryset}
+    context = {'product': queryset}
     return render(request, 'update.html', context)
