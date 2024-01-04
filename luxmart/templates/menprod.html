@@ -1,0 +1,55 @@
+{% load static %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <title>Home Page</title>
+    <style>
+        body {
+    background-color: whitesmoke;
+}
+        .card-img-top {
+               object-fit: cover;
+               height: 200px; /* Set the desired height */
+               width: 100%; /* Maintain aspect ratio */
+           } 
+           </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="container mt-4 p-5">
+        <div class="row justify-content-center">
+
+            
+                {% for product in MEN %}
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/media/{{products.image}}" class="card-img-top" alt="Card Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text">{{product.description}}</p>
+                            <p class="card-text">{{product.price}}</p>
+
+                            
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% include "footer.html" %}
+    
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/fontawesome.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>

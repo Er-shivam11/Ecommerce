@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.shortcuts import render, redirect
-from .models import Product
+from .models import Product,CartItem
 from .forms import ProductForm
 
 # Create your views here.
@@ -95,19 +95,16 @@ def det(request):
     return render(request, "det.html", context)
 
 
-# views.py
-from django.shortcuts import render, redirect
-from .models import Product
-from .forms import ProductForm
 
-def product(request):
+
+def addproduct(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save(commit=False)
             product.created_by = request.user  # Assuming the user is authenticated
             product.save()
-            return redirect('/product/')
+            return redirect('/add-product/')
 
     else:
         form = ProductForm()
@@ -125,14 +122,40 @@ def product(request):
     context = {'prod': queryset, 'form': form}
     return render(request, 'addproduct.html', context)
 
-def pro_list(request):
-    return render(request,'product.html')
+def men_pro_list(request):
+    men_product=Product.objects.all().filter(category=1)
+    context={
+        'MEN':men_product
+    }
+    return render(request,'menprod.html',context)
 
+
+def women_pro_list(request):
+    return render(request,'womenprod.html')
+
+def view_cart(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.product.price * item.quantity for item in cart_items)
+    return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
+
+def add_to_cart(request, product_id):
+    product = Product.objects.get(id=product_id)
+    cart_item, created = CartItem.objects.get_or_create(product=product, 
+                                                       user=request.user)
+    cart_item.quantity += 1
+    cart_item.save()
+    return redirect('view_cart')
+ 
+def remove_from_cart(request, item_id):
+    cart_item = CartItem.objects.get(id=item_id)
+    cart_item.delete()
+    return redirect('view_cart')
+ 
 
 def delete_product(request, id):
     queryset = Product.objects.get(id=id)
     queryset.delete()
-    return redirect('/product/')
+    return redirect('/add-product/')
 
 
 def update_product(request, id):
@@ -148,7 +171,7 @@ def update_product(request, id):
         if product_image:
             queryset.description = product_details
         queryset.save()
-        return redirect('/product/')
+        return redirect('/add-product/')
 
     context = {'product': queryset}
     return render(request, 'update.html', context)

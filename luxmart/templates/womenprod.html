@@ -1,0 +1,151 @@
+{% load static %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <title>Home Page</title>
+    <style>
+        body {
+    background-color: whitesmoke;
+}
+        .card-img-top {
+               object-fit: cover;
+               height: 200px; /* Set the desired height */
+               width: 100%; /* Maintain aspect ratio */
+           } 
+           </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+        <div class="container mt-4 p-5">
+            <div class="row justify-content-center">
+            
+                <!-- Card 1 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 1</h5>
+                            <p class="card-text">Description of Product 1.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Card 2 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/static/images/c.jpg" class="card-img-top" alt="Card Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 2</h5>
+                            <p class="card-text">Description of Product 2.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Card 3 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 3</h5>
+                            <p class="card-text">Description of Product 3.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <!-- Card 1 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 1</h5>
+                            <p class="card-text">Description of Product 1.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Card 2 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/static/images/c.jpg" class="card-img-top" alt="Card Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 2</h5>
+                            <p class="card-text">Description of Product 2.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Card 3 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 3</h5>
+                            <p class="card-text">Description of Product 3.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <!-- Card 1 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 1</h5>
+                            <p class="card-text">Description of Product 1.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Card 2 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/static/images/c.jpg" class="card-img-top" alt="Card Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 2</h5>
+                            <p class="card-text">Description of Product 2.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Card 3 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 3</h5>
+                            <p class="card-text">Description of Product 3.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    {% include "footer.html" %}
+    
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/fontawesome.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>

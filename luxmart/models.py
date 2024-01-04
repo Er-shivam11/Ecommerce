@@ -9,6 +9,12 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    class Meta:
+        db_table = 'tbl_category'
+    
+    def __str__(self) -> str:
+        return self.name
+
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
@@ -20,7 +26,20 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
+    class Meta:
+        db_table = 'tbl_product'
+    
+    def __str__(self) -> str:
+        return self.category
+    
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+ 
+    def __str__(self):
+        return f'{self.quantity} x {self.product.name}'
 
 class sign_up(models.Model):
     first_name = models.CharField(max_length=100)
