@@ -5,8 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.shortcuts import render, redirect
-from .models import Product,CartItem
-from .forms import ProductForm
+from .models import Product,CartItem,Order
+from .forms import ProductForm,OrderForm
 
 # Create your views here.
 # C:\Users\User\python_projects\django_projects
@@ -15,37 +15,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 
-def compare_lists(request):
-    li1 = ['(GSTIN(O1) : 1890107200253)', '(EXP(17) : Aug 15, 2015)',
-           '(Batch No(10) : RNBXY0614)', '(S.No(21) : 15892152002)']
-    li2 = [
-        'ORO\n\nGSTIN(O1) : 1890107200253\nEXP(17) : Aug 15, 2017\n\nBatch No(10) : RNBXY0614\nS.No(21) : 15892152002\n']
-    li3 = [
-        'ORO\n\nGSTIN(O1) : 1890107200253\nEXP(17) : Aug 15, 2015\n\nBatch No(10) : RNBXY0614\nS.No(21) : 15892152002\n']
-    li4 = [
-        'OROqugs\n\nGSTIN(O1) : 1890107200253\nEXP(17) : Aug 15, 2017\n\nBatch No(10) : RNBXY0614\nS.No(21) : 15892002\n']
-    lists_to_compare = [li2, li3, li4]
 
-    result = 'Success'
-    for li in lists_to_compare:
-        # Extract column names and values from the inspection list
-        column_values_ins = {}
-        for entry in li:
-            columns = entry.split(':')
-            column_name = columns[0].strip()
-            column_value = columns[1].strip()
-            column_values_ins[column_name] = column_value
-
-        # Filter data in the database list based on column names
-        filter_data = [entry for entry in li1 if entry.split(
-            ':')[0].strip() in column_values_ins]
-
-        # Compare the filtered data with the inspection list
-        if filter_data != li:
-            result = 'Unsuccessful'
-            break
-
-    return render(request, 'compare.html', {'result': result})
 
 @login_required(login_url="login")
 def home(request):
@@ -175,3 +145,19 @@ def update_product(request, id):
 
     context = {'product': queryset}
     return render(request, 'update.html', context)
+
+def order(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.created_by = request.user  # Assuming the user is authenticated
+            product.save()
+            return redirect('/add-product/')
+
+    else:
+        form = OrderForm()
+
+    queryset = Order.objects.all()    
+    context = {'prod': queryset, 'form': form}
+    return render(request, 'orderform.html', context)

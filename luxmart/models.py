@@ -32,6 +32,8 @@ class Product(models.Model):
     def __str__(self) -> str:
         return self.category
     
+
+    
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
@@ -40,6 +42,36 @@ class CartItem(models.Model):
  
     def __str__(self):
         return f'{self.quantity} x {self.product.name}'
+
+
+class Order(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
+    address = models.CharField(max_length=250)
+    city = models.CharField(max_length=100)
+    categories = models.ManyToManyField(Category, through='OrderDetail', related_name='orders')
+
+    products = models.ManyToManyField(Product, through='OrderDetail', related_name='orders')
+
+    carts = models.ManyToManyField(CartItem, through='OrderDetail', related_name='orders')
+
+    created = models.DateTimeField(auto_now_add=True)
+    update = models.DateTimeField(auto_now=True)
+    paid = models.BooleanField(default=False)
+    class Meta:
+        ordering = ('-created',)
+    
+    
+class OrderDetail(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_details')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    cart_item = models.ForeignKey(CartItem, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
+    class Meta:
+        db_table = 'tbl_ordetail'
+    
 
 class sign_up(models.Model):
     first_name = models.CharField(max_length=100)

@@ -68,7 +68,7 @@
         <div class="product-item">
             <p>{{ item.product.name }} ({{ item.quantity }})</p>
             <p>Price: ${{ item.product.price }}</p>
-            <img src="{{{{ item.product.image.url }}}}" class="card-img-top" alt="Card Image">
+            <img src="{{ item.product.image.url }}" class="card-img-top" alt="Card Image">
             <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
         </div>
         {% empty %}
@@ -80,6 +80,8 @@
         <p>Total Price: ${{ total_price }}</p>
      
         <a href="{% url 'home' %}">Continue Shopping</a>
+        <a href="{% url 'order' %}">Place order</a>
+		
 
 
 </body>
