@@ -31,7 +31,7 @@
                 
                 <div class="col-md-4">
                     <div class="card">
-                        <img src="/media/{{products.image}}" class="card-img-top" alt="Card Image">
+                        <img src="/media/{{product.image}}" class="card-img-top" alt="Card Image">
                         <div class="card-body">
                             <h5 class="card-title">{{product.name}}</h5>
                             <p class="card-text">{{product.description}}</p>
@@ -39,6 +39,8 @@
 
                             
                             <a href="#" class="btn btn-primary">Learn More</a>
+                            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">ADD CART</a>
+
                         </div>
                     </div>
                 </div>

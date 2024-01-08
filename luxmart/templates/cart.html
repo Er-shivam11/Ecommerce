@@ -56,34 +56,53 @@
 	
 </head>
 
-<body>
+<body class="m-3 p-3">
+	
+	<div class="container p-2 m-4">
+		<h1>Your Shopping Cart</h1>
+		<div class="row product-list">
+			<div class="col-4">
+				{% for item in cart_items %}
+					<div class="card">
+						<div class="product-item">
+							<p>{{ item.product.name }} ({{ item.quantity }})</p>
+							<p>Price: ${{ item.product.price }}</p>
+							<img src="{{ item.product.image.url }}" class="card-img-top" alt="Card Image">
+							<a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+						</div>
+						{% empty %}
+						<p>Your cart is empty.</p>
+						{% endfor %}
+					</div>
+					<p>Total Price: ${{ total_price }}</p>
+					<a href="{% url 'order' %}">Place order</a>
+					
+			</div>	
+			{% for item in cart_items %}
+			<div class="col-4">
+					<div class="product-item">
+						<p>product quantity:{{ item.product.name }} ({{ item.quantity }})</p>
+						<p>Description: ${{ item.product.description }}</p>
+					</div>
+					{% empty %}
+					<p>Your cart is empty.</p>
+					{% endfor %}
+				<p>Total Price: ${{ total_price }}</p>
+				
+				<a href="{% url 'order' %}" class="btn btn-primary">Place order</a>
 
-	<h1>Your Shopping Cart</h1>
 
-	<div class="product-list">
-
-        
-
-        {% for item in cart_items %}
-        <div class="product-item">
-            <p>{{ item.product.name }} ({{ item.quantity }})</p>
-            <p>Price: ${{ item.product.price }}</p>
-            <img src="{{ item.product.image.url }}" class="card-img-top" alt="Card Image">
-            <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
-        </div>
-        {% empty %}
-        <p>Your cart is empty.</p>
-        {% endfor %}
-     
-        </div>
-     
-        <p>Total Price: ${{ total_price }}</p>
-     
+	
+			</div>
+		</div>
+		
         <a href="{% url 'home' %}">Continue Shopping</a>
         <a href="{% url 'order' %}">Place order</a>
 		
 
 
+	</div>
+	
 </body>
 
 </html>

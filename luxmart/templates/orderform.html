@@ -24,13 +24,16 @@
     <div class="row justify-content-center p-5 ">
         <div class="col-sm-8 bg-dark ">
             <div class="card border border-dark ">
+            <h4 class="text-center p-2 m-2">Order Deatils</h4>
+
                 <div class="card-body">
                     <div class="card w-50 justify-content-center">
                         <div class="card-body">
                             <form method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {{ form.as_p }}
-                                <button type="submit">Submit</button>
+                                <button type="submit" class="btn btn-primary" >Submit</button>
+
                             </form>
                         </div>
                     </div>
