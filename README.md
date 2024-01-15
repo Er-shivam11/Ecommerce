@@ -16,8 +16,15 @@ The UI is built using the following technologies:
 - HTML/CSS
 - Bootstrap
 
+## output
+
+![Product Screenshot](media/a.png)
+![Product Screenshot](media/b.png)
+![Product Screenshot](media/c.png)
+![Product Screenshot](media/d.png)
+
 ## How to Use
-To use this UI, follow these steps:
+ To use this UI, follow these steps:
 
  **Clone the repository:**
    ```bash
@@ -26,12 +33,8 @@ To use this UI, follow these steps:
 pip install -r requirements.txt
 python manage.py make migrations , python manage.py migrate, python manage.py runserver.
 Then, open a browser and navigate to http://localhost:4200/ to view the UI.
+ 
 
 
 
-## output
 
-![Product Screenshot](media/a.png)
-![Product Screenshot](media/b.png)
-![Product Screenshot](media/c.png)
-![Product Screenshot](media/d.png)
