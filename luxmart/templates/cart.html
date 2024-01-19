@@ -56,7 +56,7 @@
 	
 </head>
 
-<body class="m-3 p-3">
+<body class="m-3 p-3 bg-light">
 	
 	<div class="container p-2 m-4">
 		<h1>Your Shopping Cart</h1>
@@ -75,7 +75,11 @@
 						{% endfor %}
 					</div>
 					<p>Total Price: ${{ total_price }}</p>
-					<a href="{% url 'order' %}">Place order</a>
+					<div class="row">
+						<div class="col-12 text-center">
+							<a href="{% url 'order' %}" class="btn btn-primary">Place order</a>
+						</div>
+					</div>
 					
 			</div>	
 			{% for item in cart_items %}
@@ -89,7 +93,11 @@
 					{% endfor %}
 				<p>Total Price: ${{ total_price }}</p>
 				
-				<a href="{% url 'order' %}" class="btn btn-primary">Place order</a>
+				<div class="row">
+					<div class="col-12 text-center">
+						<a href="{% url 'order' %}" class="btn btn-primary">Place order</a>
+					</div>
+				</div>
 
 
 	

@@ -101,7 +101,18 @@ def men_pro_list(request):
 
 
 def women_pro_list(request):
-    return render(request,'womenprod.html')
+    women_product=Product.objects.all().filter(category=2)
+    context={
+        'WOMEN':women_product
+    }
+    return render(request,'womenprod.html',context)
+
+def cos_and_access(request):
+    cosacc=Product.objects.all().filter(category=3)
+    context={
+        'cosacc':cosacc
+    }
+    return render(request,'cosacc.html',context)
 
 def view_cart(request):
     cart_items = CartItem.objects.filter(user=request.user)

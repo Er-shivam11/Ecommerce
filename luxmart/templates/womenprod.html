@@ -23,125 +23,31 @@
 <body>
     {% include 'header.html' %}
 
-        <div class="container mt-4 p-5">
-            <div class="row justify-content-center">
+    <div class="container mt-4 p-5">
+        <div class="row justify-content-center">
+
             
-                <!-- Card 1 -->
+                {% for product in WOMEN %}
+                
                 <div class="col-md-4">
                     <div class="card">
-                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
+                        <img src="/media/{{product.image}}" class="card-img-top" alt="Card Image">
                         <div class="card-body">
-                            <h5 class="card-title">Product 1</h5>
-                            <p class="card-text">Description of Product 1.</p>
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text">{{product.description}}</p>
+                            <p class="card-text">{{product.price}}</p>
+
+                            
                             <a href="#" class="btn btn-primary">Learn More</a>
+                            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">ADD CART</a>
+
                         </div>
                     </div>
                 </div>
-            
-                <!-- Card 2 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="/static/images/c.jpg" class="card-img-top" alt="Card Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product 2</h5>
-                            <p class="card-text">Description of Product 2.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            
-                <!-- Card 3 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product 3</h5>
-                            <p class="card-text">Description of Product 3.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-                <!-- Card 1 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product 1</h5>
-                            <p class="card-text">Description of Product 1.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            
-                <!-- Card 2 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="/static/images/c.jpg" class="card-img-top" alt="Card Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product 2</h5>
-                            <p class="card-text">Description of Product 2.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            
-                <!-- Card 3 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product 3</h5>
-                            <p class="card-text">Description of Product 3.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-                <!-- Card 1 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product 1</h5>
-                            <p class="card-text">Description of Product 1.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            
-                <!-- Card 2 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="/static/images/c.jpg" class="card-img-top" alt="Card Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product 2</h5>
-                            <p class="card-text">Description of Product 2.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            
-                <!-- Card 3 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="/static/images/im.jpg" class="card-img-top" alt="Card Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product 3</h5>
-                            <p class="card-text">Description of Product 3.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
+    </div>
     {% include "footer.html" %}
     
     <script src="{% static 'js/jquery.min.js' %}"></script>

@@ -12,7 +12,7 @@
     <style>
         .card-img-top {
                object-fit: cover;
-               height: 200px; /* Set the desired height */
+               height: 300px; /* Set the desired height */
                width: 100%; /* Maintain aspect ratio */
            } 
            </style>
@@ -64,79 +64,30 @@
         </div>
     </div>
     
-    <div class="container-fluid p-5">
-        {% for products in prod %}
-        <div class="row">
-            <div class="col-sm-3">
-              <div class="card p-2 m-2 border border-dark">
-                <img class="card-img-top" src='/media/{{products.image}}' alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">{{products.name}}</h5>
-                  <p class="card-text">{{products.description}}</p>
-                  <a href="{% url 'add_to_cart' products.id %}" class="btn btn-primary">ADD CART</a>
-                  <a href="/delete-car/{{products.id}}/" class='btn btn-danger'>Delete</a>
-                  <a href="/update-car/{{products.id}}/" class='btn btn-success'>Update</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="card p-2 m-2 border border-dark ">
-                    <img class="card-img-top" src='/media/{{products.image}}' alt="Card image cap">
+    <div class="container-fluid justify-content-center">
+      {% for product in prod %}
+          {% if forloop.counter0|divisibleby:3 %}
+              <div class="row">
+          {% endif %}
+  
+          <div class="col-sm-4">
+              <div class="card border border-dark h-100 m-2">
+                  <img class="card-img-top custom-image-size" src='/media/{{ product.image }}' alt="Card image cap">
                   <div class="card-body">
-                    <h5 class="card-title">{{products.name}}</h5>
-                    <p class="card-text">{{products.description}}</p>
-                    <a href="{% url 'add_to_cart' products.id %}" class="btn btn-primary">ADD CART</a>
-                    <a href="/delete-car/{{products.id}}/" class='btn btn-danger'>Delete</a>
-                    <a href="/update-car/{{products.id}}/" class='btn btn-success'>Update</a>
+                      <h5 class="card-title">{{ product.name }}</h5>
+                      <p class="card-text">{{ product.description }}</p>
+                      <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">ADD CART</a>
+                      <a href="/delete-car/{{ product.id }}/" class='btn btn-danger'>Delete</a>
+                      <a href="/update-car/{{ product.id }}/" class='btn btn-success'>Update</a>
                   </div>
-                </div>
-              </div>
-            <div class="col-sm-3">
-              <div class="card p-2 m-2 border border-dark ">
-                <img class="card-img-top" src='/media/{{products.image}}' alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">{{products.name}}</h5>
-                  <p class="card-text">{{products.description}}</p>
-                  <a href="{% url 'add_to_cart' products.id %}" class="btn btn-primary">ADD CART</a>
-                  <a href="/delete-car/{{products.id}}/" class='btn btn-danger'>Delete</a>
-                    <a href="/update-car/{{products.id}}/" class='btn btn-success'>Update</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="card p-2 m-2 border border-dark ">
-                    <img class="card-img-top" src='/media/{{products.image}}' alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title">{{products.name}}</h5>
-                    <p class="card-text">{{products.description}}</p>
-                    <a href="{% url 'add_to_cart' products.id %}" class="btn btn-primary">ADD CART</a>
-                    <a href="/delete-car/{{products.id}}/" class='btn btn-danger'>Delete</a>
-                    <a href="/update-car/{{products.id}}/" class='btn btn-success'>Update</a>
-                  </div>
-                </div>
               </div>
           </div>
-          {% endfor %}
-
-    </div>
-    
-      
-    <!-- addproduct.html -->
-    
-    <!-- <div class="card w-50 justify-content-center">
-        <div class="card-body">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                form
-                {{ form.as_p }}
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-      </div> -->
-
-
-
-    
+  
+          {% if forloop.counter|divisibleby:3 or forloop.last %}
+              </div>
+          {% endif %}
+      {% endfor %}
+    </div> 
       {% include "footer.html" %}
     
     <script src="{% static 'js/jquery.min.js' %}"></script>
