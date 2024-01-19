@@ -18,8 +18,8 @@ The UI is built using the following technologies:
 
 ## output
 
-![Product Screenshot](media/a.png)
-![Product Screenshot](media/b.png)
+![Product Screenshot](media/p1.png)
+![Product Screenshot](media/p2.png)
 ![Product Screenshot](media/c.png)
 ![Product Screenshot](media/d.png)
 
