@@ -7,13 +7,12 @@ from .models import *
 from django.shortcuts import render, redirect
 from .models import Product,CartItem,Order
 from .forms import ProductForm,OrderForm
-
+from django.shortcuts import get_object_or_404, redirect
 # Create your views here.
 # C:\Users\User\python_projects\django_projects
 from django.http import HttpResponse
 
 from django.shortcuts import render
-
 
 
 
@@ -161,6 +160,7 @@ def order(request):
     if request.method == 'POST':
         form = OrderForm(request.POST, request.FILES)
         if form.is_valid():
+            
             product = form.save(commit=False)
             product.created_by = request.user  # Assuming the user is authenticated
             product.save()
@@ -172,3 +172,20 @@ def order(request):
     queryset = Order.objects.all()    
     context = {'prod': queryset, 'form': form}
     return render(request, 'orderform.html', context)
+
+
+
+def decrease_quantity(request, cart_item_id):
+    cart_item = get_object_or_404(CartItem, id=cart_item_id, user=request.user)
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
+    return redirect('view_cart')
+
+def increase_quantity(request, cart_item_id):
+    cart_item = get_object_or_404(CartItem, id=cart_item_id, user=request.user)
+    cart_item.quantity += 1
+    cart_item.save()
+    return redirect('view_cart')
