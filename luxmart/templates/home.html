@@ -103,7 +103,9 @@
 
 
 }
-
+.main-content {
+    margin-top: 50px;
+}
 
     </style>
 </head>
@@ -113,12 +115,19 @@
     
 
 <body>
-{% include "header.html" %}
+    {% include "header.html" %}
    
     <!-- Main content -->
-    <div class="container-fluid bg-light">
+    <div class="container-fluid bg-light p-4 main-content">
         
-        <div class="card-body shadow rounded bg-light ">
+        <div class="text-center shadow rounded bg-light">
+            <div class="container p-2">
+    
+                <div class="card">
+                    <img src="/static/images/bn.png" class="card-img-top" alt="Card Image">
+                </div>
+            </div>
+    
             
             <div class="img-responsive center-block">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
@@ -177,10 +186,10 @@
                     <div class="col-md-4">
                         <div class="card">
                             <img src="/static/images/ca.jpg" class="card-img-top" alt="Card Image">
-                            <div class="card-body">
+                            <div class="text-center">
                                 <h5 class="card-title">WOMEN ACTIVE WEAR</h5>
                                 <p class="card-text">50-80% off</p>
-                                <a href="{% url 'womenproductlist' %}" class="btn btn-primary">Shop Now</a>
+                                <a href="{% url 'womenproductlist' %}" class="btn btn-primary rounded-pill rounded-pill">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -189,10 +198,10 @@
                     <div class="col-md-4">
                         <div class="card">
                             <img src="/static/images/MEN.jpg" class="card-img-top" alt="Card Image">
-                            <div class="card-body">
+                            <div class="text-center">
                                 <h5 class="card-title">MEN CASUAL</h5>
                                 <p class="card-text">50-80% off</p>
-                                <a href="{% url 'menproductlist' %}" class="btn btn-primary">Shop Now</a>
+                                <a href="{% url 'menproductlist' %}" class="btn btn-primary rounded-pill rounded-pill">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -201,10 +210,10 @@
                     <div class="col-md-4">
                         <div class="card">
                             <img src="/static/images/6.jpg" class="card-img-top" alt="Card Image">
-                            <div class="card-body">
+                            <div class="text-center">
                                 <h5 class="card-title">BEAUTY AND FRAGRANCE</h5>
                                 <p class="card-text">50-80% off</p>
-                                <a href="{% url 'cosaccess' %}" class="btn btn-primary">Shop Now</a>
+                                <a href="{% url 'cosaccess' %}" class="btn btn-primary rounded-pill rounded-pill">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -220,10 +229,10 @@
                     <div class="col-md-4">
                         <div class="card">
                             <img src="/static/images/gg.jpg" class="card-img-top" alt="Card Image">
-                            <div class="card-body">
+                            <div class="text-center">
                                 <h5 class="card-title">WOMEN ETHNIC</h5>
                                 <p class="card-text">50-80% off</p>
-                                <a href="{% url 'womenproductlist' %}" class="btn btn-primary">Shop Now</a>
+                                <a href="{% url 'womenproductlist' %}" class="btn btn-primary rounded-pill rounded-pill">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -232,10 +241,10 @@
                     <div class="col-md-4">
                         <div class="card">
                             <img src="/static/images/HH.jpg" class="card-img-top" alt="Card Image">
-                            <div class="card-body">
+                            <div class="text-center">
                                 <h5 class="card-title">MEN FASHION</h5>
                                 <p class="card-text">50-80% off</p>
-                                <a href="{% url 'menproductlist' %}" class="btn btn-primary">Shop Now</a>
+                                <a href="{% url 'menproductlist' %}" class="btn btn-primary rounded-pill rounded-pill">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -244,10 +253,10 @@
                     <div class="col-md-4">
                         <div class="card">
                             <img src="/static/images/j.jpg" class="card-img-top" alt="Card Image">
-                            <div class="card-body">
+                            <div class="text-center">
                                 <h5 class="card-title">COSMETICS & ACCESSORIES</h5>
                                 <p class="card-text">50-80% off</p>
-                                <a href="{% url 'cosaccess' %}" class="btn btn-primary">Shop Now</a>
+                                <a href="{% url 'cosaccess' %}" class="btn btn-primary rounded-pill rounded-pill">Shop Now</a>
                             </div>
                         </div>
                     </div>

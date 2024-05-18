@@ -11,42 +11,40 @@
     <title>Home Page</title>
     <style>
         body {
-    background-color: whitesmoke;
-}
+            background-color: whitesmoke;
+        }
         .card-img-top {
-               object-fit: cover;
-               height: 200px; /* Set the desired height */
-               width: 100%; /* Maintain aspect ratio */
-           } 
-           </style>
+            object-fit: cover;
+            height: 200px; /* Set the desired height */
+            width: 100%; /* Maintain aspect ratio */
+        }
+        .card-body {
+            height: 150px; /* Adjust to provide enough space for the button */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
 </head>
 <body>
     {% include 'header.html' %}
-
     <div class="container mt-4 p-5">
         <div class="row justify-content-center">
-
-            
-                {% for product in cosacc %}
-                
-                <div class="col-md-4">
-                    <div class="card" style="height: 500px; overflow: hidden;">
-                        <img src="/media/{{product.image}}" class="card-img-top" alt="Card Image">
-                        <div class="card-body">
-                            <h5 class="card-title">{{product.name}}</h5>
-                            <p class="card-text">{{product.description}}</p>
-                            <p class="card-text">{{product.price}}</p>
-
-                            
-                            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">ADD CART</a>
-
-                        </div>
+            {% for product in cosacc %}
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="/media/{{ product.image }}" class="card-img-top" alt="Card Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.price }}</p>
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary rounded-pill rounded-pill">ADD CART</a>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
     </div>
+
     {% include "footer.html" %}
     
     <script src="{% static 'js/jquery.min.js' %}"></script>

@@ -11,38 +11,78 @@
     <title>Home Page</title>
     <style>
         .card-img-top {
-               object-fit: cover;
-               height: 200px; /* Set the desired height */
-               width: 100%; /* Maintain aspect ratio */
-           } 
-           </style>
+            object-fit: cover;
+            height: 200px; /* Set the desired height */
+            width: 100%; /* Maintain aspect ratio */
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            width: 100%;
+            max-width: 500px; 
+            background: linear-gradient(135deg,   #8F12FD,#4294E3, #8F12FD);/* Control the width of the card */
+        }
+        .product-card {
+            height: 350px; /* Adjust card height if needed */
+        }
+        .product-card .card-body {
+            height: 150px; /* Ensure enough space for content */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .btn-primary {
+            background-color: #ffffff;
+            border-color: #ffffff;
+            color: #000;
+        }
+        .btn-primary:hover {
+            background-color: #f8f9fa; /* Slightly darker white for hover */
+            border-color: #f8f9fa;
+        }
+    </style>
 </head>
 <body>
     {% include 'header.html' %}
     <h4 class="text-center p-2 m-2">PRODUCT LISTING</h4>
 
-    <div class="row justify-content-center p-5 ">
-        <div class="col-sm-8 bg-dark ">
-            <div class="card border border-dark ">
-            <h4 class="text-center p-2 m-2">Order Deatils</h4>
-
-                <div class="card-body">
-                    <div class="card w-50 justify-content-center">
-                        <div class="card-body">
-                            <form method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                                <button type="submit" class="btn btn-primary" >Submit</button>
-
-                            </form>
-                        </div>
+    <div class="container mt-4 p-5">
+        <div class="row justify-content-center">
+            {% for product in cosacc %}
+            <div class="col-md-3 mb-4">
+                <div class="card product-card">
+                    <img src="/media/{{ product.image }}" class="card-img-top" alt="Card Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.price }}</p>
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">ADD CART</a>
                     </div>
                 </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="form-container p-5">
+        <div class="card border border-dark bg-dark text-white">
+            <h4 class="text-center p-2 m-2">Shipping Details</h4>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     
-      {% include "footer.html" %}
+    {% include "footer.html" %}
     
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>

@@ -1,5 +1,6 @@
 {% load static %}
 {% load crispy_forms_tags %}
+
 <head>
     <!-- Required meta tags -->
     <meta charset="UTF-8">
@@ -12,86 +13,83 @@
     <style>
         .card-img-top {
                object-fit: cover;
-               height: 300px; /* Set the desired height */
-               width: 100%; /* Maintain aspect ratio */
+               height: 100px; /* Set the desired height */
+               width: 100px; /* Maintain aspect ratio */
            } 
-           </style>
+           
+    </style>
 </head>
+
 <body>
     {% include 'header.html' %}
-    <h4 class="text-center p-2 m-2">PRODUCT LISTING</h4>
-
-    <div class="row justify-content-center p-5 ">
-        <div class="col-sm-8 bg-dark ">
-            <div class="card border border-dark ">
-                <div class="card-body">
-                    <form method="POST" action="" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="form-group" >
-                            <div class="row">
-                                {{ form.name|as_crispy_field }}
-                            </div>
-                            <div class="row">   
-                                <div class="col-4">
-                                    {{ form.description|as_crispy_field }}
-                                </div>
-                                <div class="col-4">
-                                    {{ form.price|as_crispy_field }}
-                                </div>
-                                <div class="col-4">
-                                    {{ form.category|as_crispy_field }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    {{ form.image|as_crispy_field }}
-                                </div>
-                                
-                            </div>
-                                                                   
-                            
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col text-center">
-                                        <button type="submit" class="btn btn-outline-primary">ADD PRODUCT</button>
-                                    </div>
-                                </div>
-                            </div>
+<h4 class="text-center p-2 m-2">PRODUCT LISTING</h4>
+<div class="card border border-dark">
+    <div class="card-body">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3">
+                            {{ form.image|as_crispy_field }}
                         </div>
-                    </form>
+                        <div class="col-3">
+                            {{ form.name|as_crispy_field }}
+                        </div>
+                        <div class="col-3">
+                            {{ form.category|as_crispy_field }}
+                        </div>
+                        <div class="col-3">
+                            {{ form.price|as_crispy_field }}
+                        </div>
+                        <div class="col-9">
+                            {{ form.description|as_crispy_field }}
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-outline-primary rounded-pill">ADD PRODUCT</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">SR.NO</th>
+                    <th scope="col">IMAGE</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">DESCRIPTION</th>
+                    <th scope="col" class="text-center">ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in prod %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>
+                        <img class="card-img-top custom-image-size" src='/media/{{ product.image }}' alt="Card image cap">
+                    </td>
+                    <td>
+                        <h5 class="card-title">{{ product.name }}</h5>
+                    </td>
+                    <td>
+                        <p class="card-text">{{ product.description }}</p>
+                    </td>
+                    <td class="justify-content-center">
+                        <a href="/delete-car/{{ product.id }}/" class='btn btn-danger rounded-pill'>Delete</a>
+                        <a href="/update-car/{{ product.id }}/" class='btn btn-success rounded-pill'>Update</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    
-    <div class="container-fluid justify-content-center">
-      {% for product in prod %}
-          {% if forloop.counter0|divisibleby:3 %}
-              <div class="row">
-          {% endif %}
-  
-          <div class="col-sm-4">
-              <div class="card border border-dark h-100 m-2">
-                  <img class="card-img-top custom-image-size" src='/media/{{ product.image }}' alt="Card image cap">
-                  <div class="card-body">
-                      <h5 class="card-title">{{ product.name }}</h5>
-                      <p class="card-text">{{ product.description }}</p>
-                      <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">ADD CART</a>
-                      <a href="/delete-car/{{ product.id }}/" class='btn btn-danger'>Delete</a>
-                      <a href="/update-car/{{ product.id }}/" class='btn btn-success'>Update</a>
-                  </div>
-              </div>
-          </div>
-  
-          {% if forloop.counter|divisibleby:3 or forloop.last %}
-              </div>
-          {% endif %}
-      {% endfor %}
-    </div> 
-      {% include "footer.html" %}
-    
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <script src="{% static 'js/fontawesome.js' %}"></script>
-    <script src="{% static 'js/custom.js' %}"></script>
+</div>
+{% include "footer.html" %}
+
+
+            <script src="{% static 'js/jquery.min.js' %}"></script>
+            <script src="{% static 'js/bootstrap.js' %}"></script>
+            <script src="{% static 'js/fontawesome.js' %}"></script>
+            <script src="{% static 'js/custom.js' %}"></script>
 </body>

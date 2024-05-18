@@ -47,70 +47,95 @@
 			padding: 5px 10px;
 			border-radius: 5px;
 		}
+		.product-img {
+            max-width: 200px; /* Adjust the max-width as needed */
+            height: 222px; /* Maintain aspect ratio */
+        }
+		.small-icon {
+    width: 20px; /* Adjust the size as needed */
+    height: auto; /* Maintain aspect ratio */
+}
 	</style>
 </head>
 
-    
-   
-{% include "header.html" %}
-	
-</head>
-
 <body class="m-3 p-3 bg-light">
-	
-	<div class="container p-2 m-4">
-		<h1>Your Shopping Cart</h1>
-		<div class="row product-list">
-			<div class="col-4">
-				{% for item in cart_items %}
-					<div class="card">
-						<div class="product-item">
-							<p>{{ item.product.name }} ({{ item.quantity }})</p>
-							<p>Price: ${{ item.product.price }}</p>
-							<img src="{{ item.product.image.url }}" class="card-img-top" alt="Card Image">
-							<a href="{% url 'remove_from_cart' item.id %}">Remove</a>
-						</div>
-						{% empty %}
-						<p>Your cart is empty.</p>
-						{% endfor %}
-					</div>
-					<p>Total Price: ${{ total_price }}</p>
-					<div class="row">
-						<div class="col-12 text-center">
-							<a href="{% url 'order' %}" class="btn btn-primary">Place order</a>
-						</div>
-					</div>
-					
-			</div>	
-			{% for item in cart_items %}
-			<div class="col-4">
-					<div class="product-item">
-						<p>product quantity:{{ item.product.name }} ({{ item.quantity }})</p>
-						<p>Description: ${{ item.product.description }}</p>
-					</div>
-					{% empty %}
-					<p>Your cart is empty.</p>
-					{% endfor %}
-				<p>Total Price: ${{ total_price }}</p>
-				
-				<div class="row">
-					<div class="col-12 text-center">
-						<a href="{% url 'order' %}" class="btn btn-primary">Place order</a>
-					</div>
-				</div>
 
+    {% include "header.html" %}
 
-	
-			</div>
-		</div>
-		
-        <a href="{% url 'home' %}">Continue Shopping</a>
-        <a href="{% url 'order' %}">Place order</a>
-		
+    <div class="container p-4">
+        <h1>Your Shopping Cart</h1>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-12">
+                        {% for item in cart_items %}
+                        <div class="card mb-3">
+                            <div class="product-item">
+                                <p>{{ item.product.name }} ({{ item.quantity }})</p>
+                                <p>Price: ${{ item.product.price }}</p>
+                                <img src="{{ item.product.image.url }}" class="card-img-top product-img" alt="Card Image"> 
+                                
+                                <!-- Decrease product quantity button -->
+                                <a href="{% url 'decrease_quantity' item.id %}">
+                                    <img src="/static/images/m.png" class="card-img-top product-img small-icon" alt="Minus Icon">
+                                </a>
+                                <!-- Increase product quantity button -->
+                                <a href="{% url 'increase_quantity' item.id %}">
+                                    <img src="/static/images/p.png" class="card-img-top product-img small-icon" alt="Plus Icon">
+                                </a>
+                                <p>Description: {{ item.product.description }}</p>
+                            </div>
+                        </div>
+                        {% empty %}
+    
 
+                        <p>Your cart is empty.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p>Total Price: ${{ total_price }}</p>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <thead>
+                              <tr>
+                                <th scope="col">PRODUCT DETAILS</th>
+                              </tr>
+                              <tr>
+                                <th scope="row">PRODUCT NAME</th>
+                                <th scope="row">QUANTITY</th>
+                                <th scope="row">PRICE</th>
+                              </tr>
+                                
+                            </thead>
+                            <tbody>
+                        {% for item in cart_items %}
 
-	</div>
-	
+                              <tr>
+                                
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.product.price }}</td>
+                              </tr>
+                              {% empty %}
+                        <p>Your cart is empty.</p>
+                        {% endfor %}
+                            </tbody>
+                          </table>
+                        <p>Total Price: Rs : {{ total_price }}</p>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <a href="{% url 'order' %}" class="btn btn-primary">Place order</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
