@@ -1,14 +1,20 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    
     <title>Home Page</title>
+    
     <style>
         body {
             background-color: whitesmoke;
@@ -23,41 +29,49 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-        } 
-           </style>
+        }
+    </style>
 </head>
 <body>
     {% include 'header.html' %}
-
+    
     <div class="container mt-4 p-5">
-        <div class="row justify-content-center">
-
-            
-                {% for product in MEN %}
-                
-            <div class="col-md-3 mb-4">
-
-                    <div class="card">
-                        <img src="/media/{{product.image}}" class="card-img-top" alt="Card Image">
-                        <div class="card-body">
-                            <h5 class="card-title">{{product.name}}</h5>
-                            <p class="card-text">{{product.price}}</p>
-
-                            
-                            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">ADD CART</a>
-
-                        </div>
+        <input type="text" id="searchInput" class="form-control mb-4" placeholder="Search products...">
+        
+        <div class="row justify-content-center" id="productContainer">
+            {% for product in MEN %}
+            <div class="col-md-3 mb-4 product-card" data-name="{{ product.name }}">
+                <div class="card">
+                    <img src="/media/{{ product.image }}" class="card-img-top" alt="Card Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.price }}</p>
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">ADD TO CART</a>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
     </div>
     {% include "footer.html" %}
 
-    
+    <!-- jQuery and custom JavaScript for search functionality -->
+    <script>
+        $(document).ready(function() {
+            $('#searchInput').on('keyup', function() {
+                var value = $(this).val().toLowerCase(); // Get the value of the input, convert to lowercase
+                $('.product-card').filter(function() { // Filter product cards
+                    $(this).toggle($(this).data('name').toLowerCase().indexOf(value) > -1); // Toggle visibility based on search input
+                });
+            });
+        });
+    </script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
+
+
+    <!-- Bootstrap JS and other dependencies -->
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/fontawesome.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
 </body>
+</html>

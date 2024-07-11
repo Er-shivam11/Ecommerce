@@ -105,3 +105,14 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidepanel").style.width = "0";
 }
+
+// for search filter
+
+$(document).ready(function() {
+	$('#searchInput').on('keyup', function() {
+		var value = $(this).val().toLowerCase(); // Get the value of the input, convert to lowercase
+		$('.product-card').filter(function() { // Filter product cards
+			$(this).toggle($(this).data('name').toLowerCase().indexOf(value) > -1); // Toggle visibility based on search input
+		});
+	});
+});
