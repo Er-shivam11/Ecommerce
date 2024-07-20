@@ -84,6 +84,8 @@ WSGI_APPLICATION = "ecommerce.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+
+#docker setup
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
