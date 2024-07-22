@@ -34,18 +34,18 @@
                             <h2 class="text-center mb-4">Update Product Details</h2>
                             <hr>
                             <div class="form-group">
-                                <label for="Product_name" class="form-label">Product Name</label>
-                                <input id="Product_name" name="Product_name" value="{{ Products.Product_name }}" required type="text" class="form-control">
+                                <label for="name" class="form-label">Product Name</label>
+                                <input id="name" name="name" value="{{ product.name }}" required type="text" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="Product_details" class="form-label">Product Description</label>
-                                <textarea id="Product_details" name="Product_details" required class="form-control">{{ Products.Product_details }}</textarea>
+                                <label for="description" class="form-label">Product Description</label>
+                                <textarea id="description" name="description" required class="form-control">{{ product.description }}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="Product_image" class="form-label">Product Image</label>
-                                <input id="Product_image" name="Product_image" value="{{ Products.Product_image }}" required type="file" class="form-control">
-                                {% if Products.Product_image %}
-                                    <label><a href="{{ Products.Product_image.url }}" target="_blank">View Image</a></label>
+                                <label for="image" class="form-label">Product Image</label>
+                                <input id="image" name="image" type="file" class="form-control">
+                                {% if product.image %}
+                                    <label><a href="{{ product.image.url }}" target="_blank">View Image</a></label>
                                 {% endif %}
                             </div>
                             <button type="submit" class="btn btn-success btn-block">Update Product Details</button>

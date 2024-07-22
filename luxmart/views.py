@@ -148,13 +148,13 @@ def update_product(request, id):
 
         queryset.image = product_image
         queryset.name = product_name
-        if product_image:
-            queryset.description = product_details
+        queryset.description = product_details  # Fixed here
         queryset.save()
         return redirect('/add-product/')
 
     context = {'product': queryset}
     return render(request, 'update.html', context)
+
 
 def order(request):
     if request.method == 'POST':
