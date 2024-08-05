@@ -5,12 +5,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.shortcuts import render, redirect
-from .models import Product,CartItem,Order
-from .forms import ProductForm,OrderForm
+from .models import Product,CartItem,Order,CustomUser
+from .forms import ProductForm,OrderForm,CustomerRegisterForm
 from django.shortcuts import get_object_or_404, redirect
 # Create your views here.
 # C:\Users\User\python_projects\django_projects
 from django.http import HttpResponse
+from django.db.models import Q
 
 from django.shortcuts import render
 
@@ -27,18 +28,19 @@ def index(request):
 
 def sign_up(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        pass1 = request.POST.get('password1')
-        pass2 = request.POST.get('password2')
-
-        if pass1 != pass2:
-            return HttpResponse("Your password and confrom password are not Same!!")
-        else:
-            my_user = User.objects.create_user(username, email, pass1)
-            my_user.save()
+        create_form = CustomerRegisterForm(request.POST, request.FILES)
+        if create_form.is_valid():
+            user = create_form.save()
+           
+            # Redirect to the login page or home page as needed
             return redirect('login')
-    return render(request, "signup.html")
+        else:
+            print(create_form.errors)
+    else:
+        create_form = CustomerRegisterForm()
+    
+    context = {'createform': create_form}
+    return render(request, "signup.html", context)
 
 
 def sign_in(request):
@@ -52,6 +54,66 @@ def sign_in(request):
         else:
             return HttpResponse("Username or Password is incorrect!!!")
     return render(request, "signin.html")
+
+
+from .forms import ProfileUpdateForm
+
+
+def view_profile(request):
+    user = request.user
+    orders = Order.objects.filter(email=user.email)  # Filter orders by the user's email or other identifier
+
+    context = {
+        'user': user,
+        'orders': orders
+    }
+    return render(request, 'profile_view.html', context)
+@login_required
+def profile_view_update(request):
+    user = request.user
+    orders = Order.objects.filter(email=user.email)  # Filter orders by the user's email or other identifier
+
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile_view')  # Redirect to the profile page after saving
+    else:
+        form = ProfileUpdateForm(instance=user)
+
+    context = {
+        'form': form,
+        'orders': orders
+    }
+    return render(request, 'profile.html', context)
+
+@login_required(login_url="login")
+def userlist(request):
+    
+    user_list = CustomUser.objects.filter(~Q(username=request.user.username) & ~Q(is_superuser=True) & Q(is_active=True))
+    # user_list = CustomUser.objects.filter(username=request.user.username)
+    # user_list = CustomUser.objects.exclude(Q(username=request.user.username) & Q(request.user.is_superuser))
+    if request.user.user_type_id == 1 or request.user.is_superuser:
+
+    
+        context = {"userlist": user_list}
+    else:
+        return HttpResponse('you are not allowed')
+    
+    return render(request, "userlist.html", context)
+
+@login_required(login_url="login")
+def userlist(request):
+    
+    user_list = CustomUser.objects.filter(~Q(username=request.user.username) & ~Q(is_superuser=True) & Q(is_active=True))
+    if request.user.user_type_id == 1 or request.user.is_superuser:
+
+    
+        context = {"userlist": user_list}
+    else:
+        return HttpResponse('you are not allowed')
+    
+    return render(request, "userlist.html", context)
 
 
 def det(request):

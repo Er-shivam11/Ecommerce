@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    
+    <title>Home Page</title>
+<body>
+    {% include 'header.html' %}
+    
+
+    <h1>Profile Information</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <h2>Order History</h2>
+    <ul>
+        {% for order in orders %}
+            <li>
+                <strong>Order ID:</strong> {{ order.id }} <br>
+                <strong>Created At:</strong> {{ order.created }} <br>
+                <strong>Status:</strong> {{ order.get_status_display }} <br>
+                <ul>
+                    {% for detail in order.order_details.all %}
+                        <li>
+                            Product: {{ detail.product.name }} <br>
+                            Quantity: {{ detail.quantity }} <br>
+                            Price: {{ detail.price }} <br>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% empty %}
+            <li>No orders found.</li>
+        {% endfor %}
+    </ul>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+
+    <!-- Bootstrap JS and other dependencies -->
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/fontawesome.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>
+
+</body>
+</html>

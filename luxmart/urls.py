@@ -5,6 +5,7 @@ from luxmart import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -12,6 +13,12 @@ urlpatterns = [
     path("index/", views.index, name="index"),
     path("", views.sign_up, name="signup"),
     path("login/", views.sign_in, name="login"),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path("profile_view_upd/", views.profile_view_update, name="profile_view_upd"),
+    path("view_profile/", views.view_profile, name="view_profile"),
+    path("userlist/", views.userlist, name="userlist"),
+
+
     path("detail/", views.det, name="det"),
     path("add-product/", views.addproduct, name="addproduct"),
     path("menproductlist/", views.men_pro_list, name="menproductlist"),

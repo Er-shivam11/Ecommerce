@@ -1,4 +1,5 @@
 {% load static %}
+{%load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +20,6 @@
             margin: 0;
             box-sizing: border-box;
         }
-
     </style>
 </head>
 
@@ -28,26 +28,25 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form action="" method="post">
+    <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         <h3>Signup Here</h3>
+        {{ createform.username|as_crispy_field }}
 
-        <label for="username">Username</label>
-        <input type="text" placeholder="Username" name="username" id="username">
+        {{ createform.email|as_crispy_field }}
 
-        <label for="email">Email</label>
-        <input type="email" placeholder="Email or Phone" name="email" id="email">
+        {{ createform.password1|as_crispy_field }}
 
-        <label for="password1">Password</label>
-        <input type="password" placeholder="Password" id="password1" name="password1">
+        {{ createform.password2|as_crispy_field }}
 
 
-        <label for="password2">Confrom Password</label>
-        <input type="password" placeholder="Confrom Password" id="password2" name="password2">
-        <button type="submit">Signup</button>
+      
 
-        <a href="{% url 'login' %}">i have already account</a>
+        <button type="submit" class="btn btn-outline-primary">Signup</button>
+
+        <a href="{% url 'login' %}">I already have an account</a>
     </form>
+
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/fontawesome.js' %}"></script>

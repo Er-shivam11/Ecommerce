@@ -10,11 +10,19 @@
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
         </li>
+        {% if request.user.is_superuser or request.user.user_type.type_name == "Admin" %}
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'userlist' %}">Userlist</a>
+      </li>
+      {% endif %}
         <li class="nav-item">
-        {% if request.user.is_superuser %}
+        {% if request.user.is_superuser or request.user.user_type.type_name == "Admin" %}
+        <li class="nav-item">
             <a class="nav-link" href="{% url 'addproduct' %}">Add new Product</a>
         </li>
         {% endif %}
+      
         
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,13 +41,29 @@
       <ul class="navbar-nav ml-auto">
         <!-- Profile Icon (you can replace 'profile-icon.png' with your icon) -->
         <li class="nav-item">
-          <a class="nav-link" href="#"><img src="{% static 'profile-icon.png' %}" alt="Profile"></a>
-        </li>
-        
+          {% if request.user.is_authenticated %}
+              <a class="nav-link" href="{% url 'view_profile' %}">
+                  {% if request.user.profile_image %}
+                      <img src="{{ request.user.profile_image.url }}" alt="Profile" style="width: 30px; height: 30px;">
+                  {% else %}
+                      <img src="{% static 'images/p.jpg' %}" alt="Profile" style="width: 30px; height: 30px;">
+                  {% endif %}
+              </a>
+          {% else %}
+              <a class="nav-link" href="{% url 'login' %}"><img src="{% static 'profile-icon.png' %}" alt="Profile" style="width: 30px; height: 30px;"></a>
+          {% endif %}
+      </li>
+      
+
         <!-- Cart Icon (you can replace 'cart-icon.png' with your icon) -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'view_cart' %}"><img src="/static/images/o.png" alt="Cart" style="width: 30px; height: 30px;"></a>
         </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">logout</a>
+        </li>
+        
         
         <!-- Search Bar -->
         

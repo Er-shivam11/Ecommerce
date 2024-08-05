@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-dg68)xha+d1f(i27#5ii)lcz()wqo5cbj@ss$hq6fj6%e6j&2s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.124', '127.0.0.1','localhost']
+ALLOWED_HOSTS = ['192.168.1.124', '127.0.0.1','localhost','*']
 
 
 # Application definition
@@ -91,12 +91,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'luxmart',
         'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'db',
+        'PASSWORD': '',
+        'HOST': 'localhost',
         'PORT': '3306'
     }
 }
 
+AUTH_USER_MODEL = "luxmart.CustomUser"
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "login"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
