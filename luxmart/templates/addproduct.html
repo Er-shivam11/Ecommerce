@@ -27,60 +27,111 @@
             display: flex;
             justify-content: center;
         }
+        .card{
+           background: linear-gradient(135deg, #5433ff, #20bdff, #a5fecb);
+        }
+        /* Image preview container */
+.image-preview-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px dashed #007bff; /* Blue dashed border */
+    background-color: #f8f9fa; /* Light gray background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Image preview */
+.image-preview-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute; /* Overlaying the img on the container */
+    top: 0;
+    left: 0;
+}
+
+/* Form elements */
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    border-radius: 4px;
+    box-shadow: none;
+    border-color: #ddd;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.btn-primary {
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
     </style>
 </head>
 <body>
-    {% include 'header.html' %}
-    
-    <div class="container-fluid">
-        <div class="row justify-content-center mt-4">
-            <div class="col-lg-6 p-2 m-2">
-                <h4 class="text-center p-2 m-2">PRODUCT LISTING</h4>
-                <div class="card border border-dark">
-                    <div class="card-body">
-                        <form method="POST" action="" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        {{ form.image|as_crispy_field }}
-                                    </div>
-                                    <div class="col-lg-6">
-                                        {{ form.name|as_crispy_field }}
-                                    </div>
-                                    <div class="col-lg-6">
-                                        {{ form.category|as_crispy_field }}
-                                    </div>
-                                    <div class="col-lg-6">
-                                        {{ form.price|as_crispy_field }}
-                                    </div>
-                                    <div class="col-lg-12">
-                                        {{ form.description|as_crispy_field }}
-                                    </div>
-                                    <div class="col-12 text-center">
-                                        <button type="submit" class="btn btn-outline-primary rounded-pill">ADD PRODUCT</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include "header.html" %}
 
-    <table class="table mt-4 custom-table">
-        <thead>
-            <tr>
-                <th scope="col">SR.NO</th>
-                <th scope="col">IMAGE</th>
-                <th scope="col">NAME</th>
-                <th scope="col">DESCRIPTION</th>
-                <th scope="col" class="text-center">ACTION</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in prod %}
+    <div class="container my-5">
+        <!-- Form Section -->
+        <div class="card shadow-lg p-4 mb-5">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group text-center">
+                    <div class="image-preview-container mb-3 mx-auto">
+                        <img id="image-preview" class="circular-image" alt="Image Preview" style="display:none;">
+                    </div>
+                    {{ form.image|as_crispy_field }}
+                </div>
+                <div class="form-group">
+                    {{ form.name|as_crispy_field }}
+                </div>
+                <div class="form-group">
+                    {{ form.description|as_crispy_field }}
+                </div>
+                <div class="form-group">
+                    {{ form.price|as_crispy_field }}
+                </div>
+                <div class="form-group">
+                    {{ form.category|as_crispy_field }}
+                </div>
+               
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in prod %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>
@@ -98,14 +149,28 @@
                 </td>
             </tr>
             {% endfor %}
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    {% include "footer.html" %}
-
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <script src="{% static 'js/fontawesome.js' %}"></script>
-    <script src="{% static 'js/custom.js' %}"></script>
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('image-preview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+     <script src="{% static 'js/jquery.min.js' %}"></script>
+    
+    
+     <!-- Bootstrap JS and other dependencies -->
+     <script src="{% static 'js/bootstrap.js' %}"></script>
+     <script src="{% static 'js/fontawesome.js' %}"></script>
+     <script src="{% static 'js/custom.js' %}"></script>
 </body>
 </html>

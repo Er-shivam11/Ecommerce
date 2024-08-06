@@ -29,11 +29,14 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'description', 'price', 'category', 'image']
-
-    def __init__(self, *args, **kwargs):
-        super(ProductForm, self).__init__(*args, **kwargs)
-        # Optionally, you can customize widget attributes or add placeholders here
-        self.fields['description'].widget = forms.Textarea(attrs={'rows': 5, 'cols': 40})
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter product name'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 1, 'placeholder': 'Enter product description'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter product price'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'custom-file-input', 'onchange': 'previewImage(event)'}),
+        }
+        
 
 class OrderForm(forms.ModelForm):
     class Meta:
