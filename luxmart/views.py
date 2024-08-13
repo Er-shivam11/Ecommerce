@@ -14,7 +14,8 @@ from django.http import HttpResponse
 from django.db.models import Q
 
 from django.shortcuts import render
-
+from .models import CartItem, Coupon
+from django.contrib import messages
 
 
 @login_required(login_url="login")
@@ -61,11 +62,13 @@ from .forms import ProfileUpdateForm
 
 def view_profile(request):
     user = request.user
-    orders = Order.objects.filter(email=user.email)  # Filter orders by the user's email or other identifier
+    orders = Order.objects.filter(email=user.email) 
+    cart_items = CartItem.objects.filter(user=user)
 
     context = {
         'user': user,
-        'orders': orders
+        'orders': orders,
+         'cart_items': cart_items,
     }
     return render(request, 'profile_view.html', context)
 @login_required
@@ -178,7 +181,34 @@ def cos_and_access(request):
 def view_cart(request):
     cart_items = CartItem.objects.filter(user=request.user)
     total_price = sum(item.product.price * item.quantity for item in cart_items)
-    return render(request, 'cart.html', {'cart_items': cart_items, 'total_price': total_price})
+    discount = 0
+    coupon_code = request.GET.get('coupon_code', '')  # Get coupon code from the request
+
+    if coupon_code:
+        try:
+            coupon = Coupon.objects.get(code=coupon_code)
+            if coupon.is_valid:
+                discount = total_price * coupon.discount_percentage / 100
+            else:
+                messages.error(request, 'Invalid or expired coupon code.')
+        except Coupon.DoesNotExist:
+            messages.error(request, 'Coupon code does not exist.')
+
+    total_price_after_discount = total_price - discount
+    delivery_charges = 10  # You can modify this logic as needed
+
+    # Count the total number of items in the cart
+    cart_item_count = cart_items.aggregate(total_quantity=models.Sum('quantity'))['total_quantity'] or 0
+    print(cart_item_count)
+
+    return render(request, 'cart.html', {
+        'cart_items': cart_items,
+        'total_price': total_price,
+        'discount': discount,
+        'total_price_after_discount': total_price_after_discount,
+        'delivery_charges': delivery_charges,
+        'cart_item_count': cart_item_count,  # Add this line
+    })
 
 def add_to_cart(request, product_id):
     product = Product.objects.get(id=product_id)

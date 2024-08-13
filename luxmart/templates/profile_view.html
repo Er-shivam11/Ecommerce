@@ -27,6 +27,11 @@
 .card {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
 }
+.cart-item-image {
+            width: 100px;  /* Fixed width */
+            height: 100px; /* Fixed height */
+            object-fit: cover; /* Ensure the image covers the area without distortion */
+        }
 
 .card {
     position: relative;
@@ -203,17 +208,30 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5>Cart Items</h5>
-                            <ul class="list-group">
-                                {% for cart_item in cart_items %}
-                                    <li class="list-group-item">
-                                        <strong>Product:</strong> {{ cart_item.product.name }} <br>
-                                        <strong>Quantity:</strong> {{ cart_item.quantity }} <br>
-                                        <strong>Date Added:</strong> {{ cart_item.date_added }}
-                                    </li>
-                                {% empty %}
-                                    <li class="list-group-item">No items in cart.</li>
-                                {% endfor %}
-                            </ul>
+                            <div class="row">
+                                {% if cart_items %}
+                                    {% for cart_item in cart_items %}
+                                        <div class="col-md-6">  <!-- 3 columns for Bootstrap grid (4 items per row) -->
+                                            <div class="card ">
+                                                <div class="card-body">
+                                                    <strong>Product:</strong> {{ cart_item.product.name }} <br>
+                                                    <strong>Quantity:</strong> {{ cart_item.quantity }} <br>
+                
+                                                    {% if cart_item.product.image %}
+                                                        <img src="{{ cart_item.product.image.url }}" class="cart-item-image" alt="{{ cart_item.product.name }}" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                                                    {% else %}
+                                                        <p>No image available</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="col-12">
+                                        <p>No items in cart.</p>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>

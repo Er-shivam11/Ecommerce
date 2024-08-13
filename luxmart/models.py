@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 # Custom user type model
 class UserType(models.Model):
@@ -111,3 +112,16 @@ class SignUp(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)
     password = models.CharField(max_length=100)
+
+
+class Coupon(models.Model):
+    code = models.CharField(max_length=20, unique=True)
+    discount_percentage = models.PositiveIntegerField()
+    expiration_date = models.DateTimeField()
+    is_valid = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.code
+
+    def is_valid(self):
+        return self.is_valid and self.expiration_date > timezone.now()

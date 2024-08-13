@@ -1,4 +1,30 @@
 {% load static %}
+<style>
+  .cart-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-image {
+    width: 40px; /* Adjust based on your image size */
+    height: 40px; /* Adjust based on your image size */
+}
+
+.badge {
+    position: absolute;
+    top: 40%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    padding: 0.3em 0.6em; /* Adjust padding for fit */
+    border-radius: 50%;
+    background-color: #00050a; /* Customize background color */
+    color: #fff; /* Customize text color */
+    font-size: 0.6em; /* Adjust font size if needed */
+    text-align: center;
+    line-height: 1; /* Ensures vertical alignment */
+}
+
+</style>
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{% url 'home' %}">Luxmart</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,9 +82,19 @@
       
 
         <!-- Cart Icon (you can replace 'cart-icon.png' with your icon) -->
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'view_cart' %}"><img src="/static/images/o.png" alt="Cart" style="width: 30px; height: 30px;"></a>
-        </li>
+        <li class="nav-item" style="position: relative;">
+          <a class="nav-link" href="{% url 'view_cart' %}">
+              <div class="cart-icon-container">
+                  <img src="/static/images/o.png" alt="Cart" class="cart-image">
+                  {% if cart_item_count %}
+                      <span class="badge">{{ cart_item_count }}</span>
+                  {% endif %}
+              </div>
+          </a>
+      </li>
+      
+      
+      
         
         <li class="nav-item">
           <a class="nav-link" href="{% url 'logout' %}">logout</a>

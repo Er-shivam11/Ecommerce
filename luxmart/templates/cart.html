@@ -87,13 +87,13 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Order Summary</h5>
-                        <form>
+                        <form method="get" action="{% url 'view_cart' %}">
                             <div class="form-group">
                                 <label for="couponCode">Coupon Code</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="couponCode" placeholder="Enter coupon code">
+                                    <input type="text" class="form-control" id="couponCode" name="coupon_code" placeholder="Enter coupon code" value="{{ request.GET.coupon_code }}">
                                     <div class="input-group-append">
-                                        <button class="btn btn-secondary" type="button">Apply</button>
+                                        <button class="btn btn-secondary" type="submit">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -102,9 +102,10 @@
                             <p>Discount: ${{ discount }}</p>
                             <p>Delivery Charges: ${{ delivery_charges }}</p>
                             <hr>
-                            <h5>Total: ${{ total_price }}</h5>
+                            <h5>Total: ${{ total_price_after_discount }}</h5>
                             <a href="{% url 'order' %}" class="btn btn-primary btn-block mt-3">Checkout Now</a>
                         </form>
+                        
                     </div>
                 </div>
             </div>
