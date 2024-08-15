@@ -20,7 +20,7 @@ class CustomerRegisterForm(UserCreationForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'age', 'profile_image']
+        fields = ['username', 'email', 'age', 'profile_image','address']
         widgets = {
             'profile_image': forms.ClearableFileInput(attrs={'multiple': False}),
         }

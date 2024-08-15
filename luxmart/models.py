@@ -21,6 +21,7 @@ class CustomUser(AbstractUser):
     age = models.PositiveIntegerField(null=True, blank=True)
     user_type = models.ForeignKey(UserType, verbose_name='User Type', on_delete=models.SET_NULL, null=True)
     profile_image = models.ImageField(upload_to='media', null=True, blank=True)
+    address = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(verbose_name='Created At', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Updated At', auto_now=True)
 
@@ -29,6 +30,8 @@ class CustomUser(AbstractUser):
 
     def __str__(self) -> str:
         return self.username
+    def cart_item_count(self):
+        return CartItem.objects.filter(user=self).aggregate(total_quantity=models.Sum('quantity'))['total_quantity'] or 0
 
 
 # Category model for product categorization
