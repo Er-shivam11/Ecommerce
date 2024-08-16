@@ -86,6 +86,17 @@ WSGI_APPLICATION = "ecommerce.wsgi.application"
 # }
 
 #docker setup
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'luxmart',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'db',
+#         'PORT': '3306'
+#     }
+# }
+# with xammp
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -96,7 +107,6 @@ DATABASES = {
         'PORT': '3306'
     }
 }
-
 AUTH_USER_MODEL = "luxmart.CustomUser"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "login"
@@ -129,10 +139,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
-STATICFILES_DIR = {
-    os.path.join(BASE_DIR, "public/static")
-}
+STATIC_URL = '/static/'
+
+# during deployment
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'luxmart/static'),
+]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
